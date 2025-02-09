@@ -1,5 +1,5 @@
-// Get the correct Amplify export from the UMD build.
-const Amplify = window.aws_amplify.Amplify || window.aws_amplify.default;
+// Use the global aws_amplify as Amplify
+const Amplify = window.aws_amplify;
 
 // ============================
 // AWS Amplify & Cognito Setup
@@ -31,7 +31,7 @@ Amplify.configure({
     }
   }
 });
-  
+
 // ============================
 // UI Elements and Event Handlers
 // ============================

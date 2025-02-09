@@ -7,7 +7,7 @@
 // For example, in your Cognito console, under "App integration", set the callback and sign-out URLs
 // to the URL of your hosted static website (e.g., the Amplify Console URL).
 
-Amplify.configure({
+aws_amplify.configure({
   Auth: {
     // REQUIRED - Amazon Cognito Region (use just the region code)
     region: 'eu-north-1',
@@ -19,7 +19,7 @@ Amplify.configure({
     mandatorySignIn: false,
     // OPTIONAL - Hosted UI configuration for federated sign-in (Google)
     oauth: {
-      domain: 'eu-north-1uavvqdahl.auth.eu-north-1.amazoncognito.com',
+      domain: 'https://eu-north-1uavvqdahl.auth.eu-north-1.amazoncognito.com',
       scope: ['email', 'profile', 'openid'],
       // Updated redirect URLs to match your new Amplify Console domain
       redirectSignIn: 'https://main.d6079kprpbdct.amplifyapp.com/',
@@ -39,23 +39,23 @@ const calendarDiv = document.getElementById('calendar');
 // Login button triggers the Hosted UI for Google Sign-In.
 loginBtn.addEventListener('click', () => {
   // This opens the Cognito Hosted UI and lets the user sign in via Google.
-  Auth.federatedSignIn({ provider: 'Google' });
+  aws_amplify.Auth.federatedSignIn({ provider: 'Google' });
 });
 
 // Logout button calls Amplify's signOut method.
 logoutBtn.addEventListener('click', () => {
-  Auth.signOut()
+  aws_amplify.Auth.signOut()
     .then(() => {
       // Reload the page or update UI as needed.
       window.location.reload();
     })
     .catch(err => console.error("Error signing out:", err));
 });
-
+  
 // ============================
 // Check Authentication State
 // ============================
-Auth.currentAuthenticatedUser()
+aws_amplify.Auth.currentAuthenticatedUser()
   .then(user => {
     console.log("User is signed in:", user);
     loginBtn.style.display = 'none';
@@ -67,7 +67,7 @@ Auth.currentAuthenticatedUser()
     loginBtn.style.display = 'inline-block';
     logoutBtn.style.display = 'none';
   });
-
+  
 // ============================
 // Calendar Functions
 // ============================
@@ -81,7 +81,7 @@ function loadCalendar() {
     })
     .catch(err => console.error('Error loading config:', err));
 }
-
+  
 // Render the calendar by listing events.
 function renderCalendar(events) {
   // Clear any previous content.

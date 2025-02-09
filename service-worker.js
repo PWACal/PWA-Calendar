@@ -4,10 +4,11 @@ const urlsToCache = [
   '/index.html',
   '/manifest.json',
   '/app.js',
-  '/config.json'
+  '/config.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
-// Install event: cache files
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -15,7 +16,6 @@ self.addEventListener('install', event => {
   );
 });
 
-// Fetch event: serve cached content when offline
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)

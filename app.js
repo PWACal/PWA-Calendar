@@ -1,16 +1,13 @@
-// Use the default export from the UMD bundle
-const Amplify = window.aws_amplify.default;  
-console.log("Amplify type:", typeof Amplify);  // For debugging—should log "object"
+// Use the global object as attached by the UMD build.
+// For Amplify v4.3.17 UMD, the library attaches to window.aws_amplify, and its default export is usually under the "default" property.
+const Amplify = window.aws_amplify.default || window.aws_amplify;
+
+console.log("Amplify type:", typeof Amplify);  // Should output "object"
 
 // ============================
 // AWS Amplify & Cognito Setup
 // ============================
 // IMPORTANT: Replace the configuration values below with your actual AWS Cognito details.
-// You must have already set up a Cognito User Pool and a Cognito App Client.
-// Also, configure your Hosted UI (federated sign-in) to use Google.
-// For example, in your Cognito console, under "App integration", set the callback and sign-out URLs
-// to the URL of your hosted static website (e.g., the Amplify Console URL).
-
 Amplify.configure({
   Auth: {
     // REQUIRED - Amazon Cognito Region (use just the region code)
@@ -23,7 +20,8 @@ Amplify.configure({
     mandatorySignIn: false,
     // OPTIONAL - Hosted UI configuration for federated sign-in (Google)
     oauth: {
-      domain: 'https://eu-north-1uavvqdahl.auth.eu-north-1.amazoncognito.com',
+      // Provide the domain without the protocol
+      domain: 'eu-north-1uavvqdahl.auth.eu-north-1.amazoncognito.com',
       scope: ['email', 'profile', 'openid'],
       // Updated redirect URLs to match your Amplify Console domain
       redirectSignIn: 'https://main.d6079kprpbdct.amplifyapp.com/',

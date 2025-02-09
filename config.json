@@ -1,0 +1,14 @@
+{
+  "events": [
+    {
+      "date": "2025-02-14",
+      "type": "birthday",
+      "name": "John Doe"
+    },
+    {
+      "date": "2025-02-15",
+      "type": "onomastic",
+      "name": "Jane"
+    }
+  ]
+}

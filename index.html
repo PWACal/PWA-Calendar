@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calendar Florian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Link to the manifest -->
+  <link rel="manifest" href="manifest.json" />
+  <!-- Basic styling -->
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    #login-btn, #logout-btn { margin: 10px; padding: 10px 20px; }
+    #calendar { margin-top: 20px; }
+    .day { display: inline-block; width: 100px; height: 100px; border: 1px solid #ccc; margin: 2px; vertical-align: top; }
+    .event { background: #def; padding: 2px; margin-top: 5px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Calendar Florian</h1>
+  <!-- Login/Logout buttons -->
+  <div id="auth">
+    <button id="login-btn">Sign in with Google</button>
+    <button id="logout-btn" style="display:none;">Logout</button>
+  </div>
+  <!-- Calendar container -->
+  <div id="calendar"></div>
+
+  <!-- Load AWS Amplify Library (UMD build from unpkg.com) -->
+  <script src="https://cdn.jsdelivr.net/npm/aws-amplify@4.3.17/dist/aws-amplify.min.js"></script>
+  <!-- Load your application code -->
+  <script src="app.js"></script>
+
+  <script>
+    // Register the service worker for PWA offline capability.
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('Service Worker registered', reg))
+        .catch(err => console.error('Service Worker registration failed', err));
+    }
+  </script>
+</body>
+</html>
+

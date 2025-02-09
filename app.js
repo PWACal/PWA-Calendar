@@ -1,3 +1,7 @@
+// Use the default export from the UMD bundle
+const Amplify = window.aws_amplify.default;  
+console.log("Amplify type:", typeof Amplify);  // For debugging—should log "object"
+
 // ============================
 // AWS Amplify & Cognito Setup
 // ============================
@@ -7,7 +11,7 @@
 // For example, in your Cognito console, under "App integration", set the callback and sign-out URLs
 // to the URL of your hosted static website (e.g., the Amplify Console URL).
 
-aws_amplify.configure({
+Amplify.configure({
   Auth: {
     // REQUIRED - Amazon Cognito Region (use just the region code)
     region: 'eu-north-1',
@@ -39,12 +43,12 @@ const calendarDiv = document.getElementById('calendar');
 // Login button triggers the Hosted UI for Google Sign-In.
 loginBtn.addEventListener('click', () => {
   // This opens the Cognito Hosted UI and lets the user sign in via Google.
-  aws_amplify.Auth.federatedSignIn({ provider: 'Google' });
+  Amplify.Auth.federatedSignIn({ provider: 'Google' });
 });
 
 // Logout button calls Amplify's signOut method.
 logoutBtn.addEventListener('click', () => {
-  aws_amplify.Auth.signOut()
+  Amplify.Auth.signOut()
     .then(() => {
       // Reload the page or update UI as needed.
       window.location.reload();
@@ -55,7 +59,7 @@ logoutBtn.addEventListener('click', () => {
 // ============================
 // Check Authentication State
 // ============================
-aws_amplify.Auth.currentAuthenticatedUser()
+Amplify.Auth.currentAuthenticatedUser()
   .then(user => {
     console.log("User is signed in:", user);
     loginBtn.style.display = 'none';

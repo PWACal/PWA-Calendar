@@ -16,17 +16,19 @@
 </head>
 <body>
   <h1>Calendar Florian</h1>
+  <!-- Login/Logout buttons -->
   <div id="auth">
     <button id="login-btn">Sign in with Google</button>
     <button id="logout-btn" style="display:none;">Logout</button>
   </div>
+  <!-- Calendar container -->
   <div id="calendar"></div>
-  
+
   <!-- Load your application code as an ES module -->
   <script type="module" src="app.js"></script>
-  
+
   <script>
-    // Register the service worker for offline capabilities.
+    // Register the service worker for PWA offline capability.
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(reg => console.log('Service Worker registered', reg))

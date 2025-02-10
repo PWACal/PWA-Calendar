@@ -21,12 +21,12 @@
     <button id="logout-btn" style="display:none;">Logout</button>
   </div>
   <div id="calendar"></div>
-
+  
   <!-- Load your application code as an ES module -->
   <script type="module" src="app.js"></script>
-
+  
   <script>
-    // Register the service worker (if you need offline capabilities)
+    // Register the service worker for offline capabilities.
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(reg => console.log('Service Worker registered', reg))

@@ -1,30 +1,24 @@
-// Import Amplify from the ES module build
-import Amplify from 'https://cdn.jsdelivr.net/npm/aws-amplify@4.3.17/dist/aws-amplify.esm.min.js';
+// Import AWS Amplify as an ES module from Skypack
+import Amplify from 'https://cdn.skypack.dev/aws-amplify';
 
+// Log to verify that Amplify is loaded correctly
 console.log("Amplify type:", typeof Amplify);  // Should output "object"
 
 // ============================
 // AWS Amplify & Cognito Setup
 // ============================
-// IMPORTANT: Ensure your configuration values match your AWS Cognito setup.
-// In your Cognito console (under App integration), make sure the Allowed Callback and Sign-Out URLs
-// include your Amplify Console domain: https://main.d6079kprpbdct.amplifyapp.com/
+// Ensure your Cognito configuration values are exactly as in your setup.
+// Note: The region must be just the region code. Also, omit the protocol (https://) from the oauth domain.
 Amplify.configure({
   Auth: {
-    // REQUIRED - Amazon Cognito Region (use just the region code)
     region: 'eu-north-1',
-    // OPTIONAL - Amazon Cognito User Pool ID
     userPoolId: 'eu-north-1_uAvvQdahl',
-    // OPTIONAL - Amazon Cognito Web Client ID
     userPoolWebClientId: 'eu-north-1:f016bbcd-268f-47cd-ab77-606be7fe40eb',
-    // OPTIONAL - Enforce user authentication prior to accessing AWS resources
     mandatorySignIn: false,
-    // OPTIONAL - Hosted UI configuration for federated sign-in (Google)
     oauth: {
-      // Provide the domain WITHOUT the protocol
+      // Provide the domain WITHOUT "https://"
       domain: 'eu-north-1uavvqdahl.auth.eu-north-1.amazoncognito.com',
       scope: ['email', 'profile', 'openid'],
-      // Updated redirect URLs to match your Amplify Console domain
       redirectSignIn: 'https://main.d6079kprpbdct.amplifyapp.com/',
       redirectSignOut: 'https://main.d6079kprpbdct.amplifyapp.com/',
       responseType: 'code'
@@ -48,10 +42,7 @@ loginBtn.addEventListener('click', () => {
 // Logout button calls Amplify's signOut method.
 logoutBtn.addEventListener('click', () => {
   Amplify.Auth.signOut()
-    .then(() => {
-      // Reload the page or update UI as needed.
-      window.location.reload();
-    })
+    .then(() => window.location.reload())
     .catch(err => console.error("Error signing out:", err));
 });
 
@@ -70,34 +61,25 @@ Amplify.Auth.currentAuthenticatedUser()
     loginBtn.style.display = 'inline-block';
     logoutBtn.style.display = 'none';
   });
-
+  
 // ============================
 // Calendar Functions
 // ============================
 
-// Load the config file (config.json) containing calendar events.
 function loadCalendar() {
   fetch('config.json')
     .then(response => response.json())
-    .then(config => {
-      renderCalendar(config.events);
-    })
+    .then(config => renderCalendar(config.events))
     .catch(err => console.error('Error loading config:', err));
 }
 
-// Render the calendar by listing events.
 function renderCalendar(events) {
-  // Clear any previous content.
   calendarDiv.innerHTML = '';
-
   if (!events || events.length === 0) {
     calendarDiv.textContent = "No events to display.";
     return;
   }
-
-  // Sort events by date.
   events.sort((a, b) => new Date(a.date) - new Date(b.date));
-
   events.forEach(event => {
     const eventDiv = document.createElement('div');
     eventDiv.className = 'day';

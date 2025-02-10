@@ -1,11 +1,14 @@
-// Verify that Amplify is defined
-console.log("Amplify type:", typeof Amplify);  // Expected output: "object"
+// Import Amplify from the ES module build
+import Amplify from 'https://cdn.jsdelivr.net/npm/aws-amplify@4.3.17/dist/aws-amplify.esm.min.js';
+
+console.log("Amplify type:", typeof Amplify);  // Should output "object"
 
 // ============================
 // AWS Amplify & Cognito Setup
 // ============================
-// IMPORTANT: Replace the configuration values below with your actual AWS Cognito details.
-// Ensure your region is just the region code. Also, note: for the oauth domain, omit the protocol.
+// IMPORTANT: Ensure your configuration values match your AWS Cognito setup.
+// In your Cognito console (under App integration), make sure the Allowed Callback and Sign-Out URLs
+// include your Amplify Console domain: https://main.d6079kprpbdct.amplifyapp.com/
 Amplify.configure({
   Auth: {
     // REQUIRED - Amazon Cognito Region (use just the region code)
@@ -18,7 +21,7 @@ Amplify.configure({
     mandatorySignIn: false,
     // OPTIONAL - Hosted UI configuration for federated sign-in (Google)
     oauth: {
-      // Provide the domain WITHOUT "https://"
+      // Provide the domain WITHOUT the protocol
       domain: 'eu-north-1uavvqdahl.auth.eu-north-1.amazoncognito.com',
       scope: ['email', 'profile', 'openid'],
       // Updated redirect URLs to match your Amplify Console domain
@@ -28,7 +31,7 @@ Amplify.configure({
     }
   }
 });
-  
+
 // ============================
 // UI Elements and Event Handlers
 // ============================
@@ -51,7 +54,7 @@ logoutBtn.addEventListener('click', () => {
     })
     .catch(err => console.error("Error signing out:", err));
 });
-  
+
 // ============================
 // Check Authentication State
 // ============================
@@ -67,7 +70,7 @@ Amplify.Auth.currentAuthenticatedUser()
     loginBtn.style.display = 'inline-block';
     logoutBtn.style.display = 'none';
   });
-  
+
 // ============================
 // Calendar Functions
 // ============================
@@ -81,7 +84,7 @@ function loadCalendar() {
     })
     .catch(err => console.error('Error loading config:', err));
 }
-  
+
 // Render the calendar by listing events.
 function renderCalendar(events) {
   // Clear any previous content.

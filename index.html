@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Link to the manifest -->
   <link rel="manifest" href="manifest.json">
-  <!-- Basic styling -->
   <style>
     body { font-family: sans-serif; margin: 20px; }
     #login-btn, #logout-btn { margin: 10px; padding: 10px 20px; }
@@ -17,19 +16,17 @@
 </head>
 <body>
   <h1>Calendar Florian</h1>
-  <!-- Login/Logout buttons -->
   <div id="auth">
     <button id="login-btn">Sign in with Google</button>
     <button id="logout-btn" style="display:none;">Logout</button>
   </div>
-  <!-- Calendar container -->
   <div id="calendar"></div>
-  
+
   <!-- Load your application code as an ES module -->
   <script type="module" src="app.js"></script>
-  
-  <!-- Service Worker registration -->
+
   <script>
+    // Register the service worker (if you need offline capabilities)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(reg => console.log('Service Worker registered', reg))

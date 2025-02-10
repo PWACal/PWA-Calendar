@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Calendar Florian</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Link to the manifest -->
-  <link rel="manifest" href="manifest.json" />
+  <link rel="manifest" href="manifest.json">
   <!-- Basic styling -->
   <style>
     body { font-family: sans-serif; margin: 20px; }
@@ -14,10 +14,6 @@
     .day { display: inline-block; width: 100px; height: 100px; border: 1px solid #ccc; margin: 2px; vertical-align: top; }
     .event { background: #def; padding: 2px; margin-top: 5px; font-size: 0.9em; }
   </style>
-  <!-- Load AWS Amplify Library (UMD build from jsDelivr for v3.3.27) -->
-  <script src="https://cdn.jsdelivr.net/npm/aws-amplify@3.3.27/dist/aws-amplify.min.js"></script>
-  <!-- Load your application code -->
-  <script src="app.js"></script>
 </head>
 <body>
   <h1>Calendar Florian</h1>
@@ -28,8 +24,12 @@
   </div>
   <!-- Calendar container -->
   <div id="calendar"></div>
+  
+  <!-- Load your application code as an ES module -->
+  <script type="module" src="app.js"></script>
+  
+  <!-- Service Worker registration -->
   <script>
-    // Register the service worker for PWA offline capability.
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(reg => console.log('Service Worker registered', reg))

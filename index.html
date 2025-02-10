@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <title>Calendar Florian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Link to the manifest -->
   <link rel="manifest" href="manifest.json" />
-  <!-- Basic styling -->
   <style>
     body { font-family: sans-serif; margin: 20px; }
     #login-btn, #logout-btn { margin: 10px; padding: 10px 20px; }
@@ -14,30 +12,31 @@
     .day { display: inline-block; width: 100px; height: 100px; border: 1px solid #ccc; margin: 2px; vertical-align: top; }
     .event { background: #def; padding: 2px; margin-top: 5px; font-size: 0.9em; }
   </style>
-  <!-- Load Punycode polyfill (resolves the "punycode does not exist" error) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/punycode/2.1.1/punycode.min.js"></script>
-  <!-- Load AWS Amplify Library (UMD build from jsDelivr for v4.3.17) -->
-  <script src="https://cdn.jsdelivr.net/npm/aws-amplify@4.3.17/dist/aws-amplify.umd.min.js"></script>
-  <!-- (Optional) Log to verify that the punycode polyfill and Amplify are loaded -->
+  <!-- Shim for module for punycode: Define a global module if not present -->
   <script>
-    console.log("window.punycode:", typeof window.punycode); // Should output "object"
-    console.log("window.Amplify:", typeof window.Amplify);   // Should output "object"
+    if (typeof module === 'undefined') {
+      window.module = { exports: {} };
+    }
+  </script>
+  <!-- Load punycode polyfill from cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/punycode/2.1.1/punycode.min.js"></script>
+  <!-- Load AWS Amplify Library (UMD build for v4.3.27) from jsDelivr -->
+  <script src="https://cdn.jsdelivr.net/npm/aws-amplify@4.3.27/dist/aws-amplify.umd.min.js"></script>
+  <script>
+    // For diagnostic purposes, log the existence of Amplify
+    console.log("window.Amplify:", typeof window.Amplify);  // Expected to log "object"
   </script>
   <!-- Load your application code -->
   <script src="app.js"></script>
 </head>
 <body>
   <h1>Calendar Florian</h1>
-  <!-- Login/Logout buttons -->
   <div id="auth">
     <button id="login-btn">Sign in with Google</button>
     <button id="logout-btn" style="display:none;">Logout</button>
   </div>
-  <!-- Calendar container -->
   <div id="calendar"></div>
-
   <script>
-    // Register the service worker for PWA offline capability.
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(reg => console.log('Service Worker registered', reg))
